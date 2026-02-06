@@ -1,0 +1,257 @@
+\documentclass[11pt]{article}
+%
+\renewcommand{\baselinestretch}{1}
+\topmargin=-0.5truein
+\textheight=9.0truein
+\oddsidemargin=0.0truein
+\textwidth=6.5truein
+%
+\pagestyle{empty}
+
+\input{macros.tex}
+\usepackage{comment}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{dsfont}
+
+\begin{document}
+
+\pagestyle{fancy}
+\fancyhf{} % clear default
+\fancyhead[L]{Chris Louly - HW 1 Submission} % left side header
+\fancyhead[C]{}            % center (empty)
+\fancyhead[R]{\thepage}    % right side = page number
+
+
+\begin{center}
+{\Large {\bf EECS 559 HW 1}}
+\end{center}
+
+\vspace{.05in}
+
+
+
+\vspace{.1in}
+
+%%% --- QUESTION 1 --- %%%
+\textbf{QUESTION 1:}
+\begin{enumerate}[label=(\alph*)]
+    \item   Given $\bA \in \mathbb{R}^{m \times n}$ and $\by \in \mathbb{R}^{m}$, show that the basis pursuit problem:
+            \[
+                \min_{\bx \in \mathbb{R}^n} \norm{\bx}_1 \;\; \textbf{s.t.} \;\; \bA \bx = \by
+            \]
+            is a convex problem, and recast it as a \textit{linear program} in the standard form. \newline
+
+            \textbf{SOLUTION:}
+            Firstly, we can show that this is a convex optimization problem by showing that both the objective function and constraints are convex.
+            We start by examining the objective function:
+            \begin{align*}
+                \norm{\bx}_1    &=  \sum_{i} \abs{x_i} \\
+                                &=  \sum_{i} \max\{x_i, - x_i\}
+            \end{align*}
+
+            We know that $x_i$ and $-x_i$ are linear functions, therefore convex, thus the pointwise maximum of these two functions is convex.
+            Since the objective function is a nonnegative sum of these pointwise maxima, it is also convex. 
+            The constraint:
+            \[
+                \bA \bx = \by
+            \]
+
+            is linear, therefore convex. which means that this \textit{is a convex optimization problem}. \newline
+
+            We can now recast this as a linear program in the standard form. We start by defining $\bx_+$ and $\bx_-$ as follows:
+            \begin{align*}
+                \bx_+ &\triangleq \sum_i x_i \mathds{1}_{\{x_i \geq 0\}} \be_i \\
+                \bx_- &\triangleq \sum_i -x_i \mathds{1}_{\{x_i < 0\}} \be_i
+            \end{align*}
+
+            Where $\be_i$ is the $i^\textit{th}$ cannonical basis vector of $\mathbb{R}^n$. Noitce that:
+            \begin{align*}
+                \bx = \bx_+ - \bx_-
+            \end{align*}
+
+\end{enumerate}
+\newpage
+
+
+%%% --- QUESTION 2 --- %%%
+\textbf{QUESTION 2:} Consider the following unconstrained optimization problem:
+
+\[
+    \min_{\bx \in \mathbb{R}^n} f(\bx)
+\]
+
+Where $f : \mathbb{R}^n \mapsto \mathbb{R}$ is a convex function.
+
+\begin{enumerate}[label=(\alph*)]
+    \item   Show that if $\bx_0$ is a local minimizer of $f$,  then it is also a global solution (need not to be unique).
+            Moreover, if $f$ is \textit{strictly} convex, then show that the solution is unique (if exists). \newline
+
+            \textbf{PROOF:} (By contradiction) Let $\bx_0$ be a local minimizer of $f$, meaning that $\exists \epsilon > 0$ such that:
+
+            \[
+                f(\bx_0) \leq f(\bx) \;\; \forall \bx \in \mathcal{B}(\bx_0, \epsilon) \triangleq \{\bx \in \mathbb{R}^n \; | \; \norm{\bx_0 - \bx}_2 \leq \epsilon\}
+            \]
+
+            Assume $\exists \bx_* \in \mathbb{R}^n$ such that $f(\bx_*) < f(\bx_0)$. $\forall \epsilon$ sufficiently small, $\exists \alpha \in (0, 1)$ such that:
+            \begin{align*}
+            \by \triangleq \alpha \bx_0 + (1 - \alpha) \bx_* \in \mathcal{B}(\bx_0, \epsilon)
+            \end{align*}
+
+            And by the convexity of $f$:
+            \begin{align*}
+                f(\by) \leq \alpha f(\bx_0) + (1 - \alpha) f(\bx_*)
+            \end{align*}
+
+            Since $f(\bx_*) < f(\bx_0)$, we can write:
+            \begin{align*}
+                f(\by) < \alpha f(\bx_0) + (1 - \alpha) f(\bx_0) = f(\bx_0)
+            \end{align*}
+
+            Which is when we arrive at our contradiction. 
+            Since for any arbitrary $\epsilon > 0$ there is an element $\by \in \mathcal{B}(\bx_0, \epsilon)$ such that $f(\bx_0) > f(\by)$, our assumption is false.
+            Therefore, any local minimum is a global minimum. \qed
+
+            Let's now assume that $f$ is \textit{strictly convex}. Assuming it exists, we can show the uniqueness of the global minimizer as follows. \newline
+            
+            \textbf{PROOF:} (By contradiction) Let $\bx_0$ is a local minimizer of $f$. Since strict complexity implies convexity, we know that $\bx_0$ is also a global minimizer (from the previous argument).
+            \begin{align*}
+                f(\bx_0) \leq f(\bx) \;\; \forall \bx \in \mathbb{R}^n
+            \end{align*}
+
+            Assume $\exists \bx_* \in \mathbb{R}^n$ such that $f(\bx_0) = f(\bx_*)$. By strict convexity of $f$, $\forall \alpha \in (0, 1)$:
+            \begin{align*}
+                f(\alpha \bx_0 + (1 - \alpha) \bx_*) < \alpha f(\bx_0) + (1 - \alpha) f(\bx_*) = f(\bx_0)
+            \end{align*}
+
+            Therefore there is an element in the domain that achieves a lower value than our global minimizer, which is our contradiction. 
+            Therefore our assumption is wrong. Given that $f$ is \textit{strongly convex} the local minimizer $\bx_0$ is a \textit{unique global} minimizer. \qed \newpage
+\end{enumerate}
+
+\textbf{QUESTION 2:} Continued
+\begin{enumerate}[label=(\alph*), start=2]
+    \item   Furthermore, suppose $f \in \mathcal{C}^1$ (i.e., continuously differentiable). Then show that $\bx_0$ is a \textit{global} minimizer of $f$ iff:
+            \begin{align*}
+                \nabla f(\bx_0) = \mathbf{0}
+            \end{align*}
+
+            \textbf{PROOF:} ($\Rightarrow$) Let $\bx_0$ be a global minimum of $f$. Since $f$ is convex, it satisfies the first order condition, $\forall \by \in \mathbb{R}^n$:
+            \begin{align*}
+                f(\by) \geq f(\bx_0) + (\by - \bx_0)^T \nabla f(\bx_0)
+            \end{align*}
+
+            \textbf{TODO: FINISH FORWARD}
+
+            \textbf{PROOF:} ($\Leftarrow$) Assume $\nabla f(\bx_0) = \mathbf{0}$. Since $f$ is convex, it satisfies the first order condition, $\forall \by \in \mathbb{R}^n$:
+            \begin{align*}
+                f(\by)  &\geq   f(\bx_0) + (\by - \bx_0)^T \nabla f(\bx_0) \\
+                        &=      f(\bx_0) + (\by - \bx_0)^T \mathbf{0} \\
+                        &=      f(\bx_0)
+            \end{align*}
+
+            So $\forall \by \in \mathbb{R}^n$, $\nabla f(\bx_0) = \mathbf{0}$ implies that $\bx_0$ is a global minimum of $f$.
+            
+\end{enumerate}
+
+\newpage
+
+
+%%% --- QUESTION 3 --- %%%
+\textbf{QUESTION 3:}
+Given $f(\bx), f_1(\bx), f_2(\bx), \dots, f_m(\bx)$ are convex on $\mathbb{R}^m$, show that:
+
+\begin{enumerate}[label=(\alph*)]
+    \item   If $\alpha_i \geq 0 \;\; \forall i \in [n]$, then $g(\bx) \triangleq \sum \alpha_i f_i(\bx)$ is a convex function.
+    
+            Consider some $\beta \in [0, 1]$ and $\bx, \by \in \mathbb{R}^n$. By the confexity of $f_i$:
+            \begin{align*}
+                \beta f_i(\bx) + (1 - \beta) f_i(\by) \geq f_i(\beta \bx + (1 - \beta) \by)
+            \end{align*}
+
+            Which implies:
+            \begin{align*}
+                \sum \alpha_i \left[\beta f_i(\bx) + (1 - \beta) f_i(\by)\right] &\geq \sum \alpha_i f_i(\beta \bx + (1 - \beta) \by) \\
+                \beta \sum \alpha_i f_i(\bx) + (1 - \beta) \sum \alpha_i f_i(\by) &\geq g(\beta \bx + (1 - \beta) \by) \\
+                \beta g(\bx) + (1 - \beta) g(\by) &\geq g(\beta \bx + (1 - \beta) \by) \;\; \forall \beta \in [0,1] \;\; \forall \bx, \by \in \mathbb{R}^n
+            \end{align*}
+
+            Therefore $g$ is a convex function.
+
+    \item   $g(\bx) \triangleq \max \{f_1(\bx), \dots, f_n(\bx)\}$ is convex:
+
+            Consider some $\beta \in [0, 1]$ and $\bx, \by \in \mathbb{R}^n$. We will construct two sets:
+            \begin{align*}
+                A &\triangleq \{\beta f_i(\bx) + (1 - \beta) f_i(\by) | i \in \left[n\right]\} \\
+                B &\triangleq \{f_i(\beta \bx + (1 - \beta) \by) | i \in \left[n\right]\}
+            \end{align*}
+
+            By the convexity of $f_i$, each element in $B$ is upper bounded by at least one element in $A$ which means that:
+            \begin{align*}
+                \max A \geq \max B
+            \end{align*}
+
+            \textbf{TODO: FINISH THIS ONE}
+
+    \item   Given $\bA \in \mathbb{R}^{n \times m}$, $\bx \in \mathbb{R}^m$ and $\bb \in \mathbb{R}^n$, $g(\bx) \triangleq f(\bA \bx + \bb)$ is convex. 
+
+
+\end{enumerate}
+
+
+
+\newpage
+
+%%% --- QUESTION 4 --- %%%
+\textbf{QUESTION 4:}
+Show that $f : \mathbb{R}^n \mapsto \mathbb{R}$ is convex iff for all integers $m \geq 2$:
+\begin{align}
+    f\left(
+        \sum_{i = 1}^{m} \lambda_i \bx_i
+    \right) \leq \sum_{i = 1}^{m} \lambda_i f(\bx_i) \tag{$\star$}
+\end{align}
+
+Where $x_i \in \mathbb{R}^n$ and $\lambda_i \geq 0$ $\forall i \in \left[m\right]$ satisfying $\sum \lambda_i = 1$. \newline
+
+\textbf{PROOF:} (by induction) Consider the base case ($m = 2$). The expression above boils down to the following:
+\begin{align*}
+    f(\lambda_1 \bx_1 + \lambda_2 \bx_2) \leq \lambda_1 f(\bx_1) + \lambda_2 f(\bx_2)
+\end{align*}
+
+Notice that $\lambda_1 + \lambda_2 = 1$ is equivalent to $\lambda_2 = 1 - \lambda_1$. And since $\lambda_2 \geq 0$ must be true, we know that $\lambda_1 \in [0,1]$. After substituting we get the definition of convexity:
+\begin{align*}
+    f(\lambda_1 \bx_1 + (1 - \lambda_1) \bx_2) \leq \lambda_1 f(\bx_1) + (1 - \lambda_1) f(\bx_2)
+\end{align*}
+
+So the base case ($m = 2$) the inequality ($\star$) is true iff $f$ is convex. \newline
+
+Now let's assume ($\star$) is true for some fixed value ($m = k \geq 2$):
+\begin{align*}
+    f\left(
+        \sum_{i = 1}^{k} \lambda_i \bx_i
+    \right) \leq \sum_{i = 1}^{k} \lambda_i f(\bx_i)
+\end{align*}
+
+W.l.o.g., we can express $\bx_k$ as the sum of two more vectors, and $\lambda_k$ as the sum of two more non-negative scalars.
+\begin{align*}
+    \bx_k &= \by_k + \by_{k + 1} \\
+    \lambda_k &= \tau_k + \tau_{k + 1}
+\end{align*}
+
+Notice that the sum of all of the scalars still holds $(\sum_{i=1}^{k-1} \lambda_i + \tau_k + \tau_{k+1} = 1)$. Making this substitution into ($\star$) yields:
+\begin{align*}
+    f\left(
+        \sum_{i = 1}^{k-1} \lambda_i \bx_i + \tau_k \by_k + \tau_{k+1} \by_{k+1}
+    \right) \leq \sum_{i = 1}^{k-1} \lambda_i f(\bx_i) + (\tau_k + \tau_{k+1})f(\by_k + \by_{k+1})
+\end{align*}
+
+\newpage
+
+%%% --- QUESTION 5 --- %%%
+\textbf{QUESTION 5:}
+
+
+\newpage
+
+\end{document}
+
+
