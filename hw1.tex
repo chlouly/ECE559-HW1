@@ -231,24 +231,60 @@ Now let's assume ($\star$) is true for some fixed value ($m = k \geq 2$):
     \right) \leq \sum_{i = 1}^{k} \lambda_i f(\bx_i)
 \end{align*}
 
-W.l.o.g., we can express $\bx_k$ as the sum of two more vectors, and $\lambda_k$ as the sum of two more non-negative scalars.
+W.l.o.g., we can express $\bx_k$ as follows:
 \begin{align*}
-    \bx_k &= \by_k + \by_{k + 1} \\
-    \lambda_k &= \tau_k + \tau_{k + 1}
+    \bx_k = \alpha \by_k + (1 - \alpha) \by_{k+1} \;\; \text{where} \;\; \alpha \in [0, 1]
 \end{align*}
 
-Notice that the sum of all of the scalars still holds $(\sum_{i=1}^{k-1} \lambda_i + \tau_k + \tau_{k+1} = 1)$. Making this substitution into ($\star$) yields:
+Where $\by_k$ and $\by_{k+1}$ are arbitrary vectors in $\mathbb{R}^n$. We can rewrite ($\star$) as follows:
 \begin{align*}
     f\left(
-        \sum_{i = 1}^{k-1} \lambda_i \bx_i + \tau_k \by_k + \tau_{k+1} \by_{k+1}
-    \right) \leq \sum_{i = 1}^{k-1} \lambda_i f(\bx_i) + (\tau_k + \tau_{k+1})f(\by_k + \by_{k+1})
+        \sum_{i = 1}^{k - 1} \lambda_i \bx_i + \lambda_k \alpha \by_k + \lambda_k (1 - \alpha) \by_{k + 1}
+    \right) \leq \sum_{i = 1}^{k - 1} \lambda_i f(\bx_i) + \lambda_k f(\alpha \by_k + (1 - \alpha) \by_{k+1})
 \end{align*}
 
+And by the convexity of $f$:
+\begin{align*}
+    \lambda_k f(\alpha \by_k + (1 - \alpha) \by_{k+1}) \leq \lambda_k \alpha f(\by_k) + \lambda_k (1 - \alpha) f(\by_{k+1})
+\end{align*}
+
+Which leaves us with:
+\begin{align*}
+    f\left(
+        \sum_{i = 1}^{k - 1} \lambda_i \bx_i + \lambda_k \alpha \by_k + \lambda_k (1 - \alpha) \by_{k + 1}
+    \right) \leq \sum_{i = 1}^{k - 1} \lambda_i f(\bx_i) + \lambda_k \alpha f(\by_k) + \lambda_k (1 - \alpha) f(\by_{k+1})
+\end{align*}
+
+And since $\sum_{i=1}^{k-1} \lambda_i + \lambda_k(\alpha + 1 - \alpha) = 1$, the $m=k$ case being true implies that the $m=k+1$ case is aslo true. 
+Therefor by mathematical induction, $\forall m \geq 2$, $\forall i \in \left[m\right]$, $\forall \lambda_i \geq 0$, $\forall \bx_i \in \mathbb{R}^n$:
+\begin{align*}
+    f: \mathbb{R}^n \mapsto \mathbb{R} \; \text{convex} \;\; \iff \;\; f\left(
+        \sum_{i = 1}^{m} \lambda_i \bx_i
+    \right) \leq \sum_{i = 1}^{m} \lambda_i f(\bx_i) \;\;  \text{where} \;\; \sum\lambda_i = 1
+\end{align*}
+\qed
 \newpage
 
 %%% --- QUESTION 5 --- %%%
 \textbf{QUESTION 5:}
+\begin{enumerate}[label=(\alph*)]
+    \item   Show that the sequence $x_k = 1 + \left(\frac{1}{2}\right)^{2^k}$ is Q-quadratically convergent to 1. \newline
+            \textbf{SOLUTION:} We know that $\lim_{k \mapsto \inf} x_k = 1$, consider:
+            \begin{align*}
+                \norm{1 + \left(\frac{1}{2}\right)^{2^k} - 1}_2 &\geq \gamma \norm{1 + \left(\frac{1}{2}\right)^{2^{k-1}} - 1}_2^2 \\
+                \left(\frac{1}{2}\right)^{2^k} &\geq \gamma \left[\left(\frac{1}{2}\right)^{2^{k-1}}\right]^2\\
+                \left(\frac{1}{2}\right)^{2^k} &\geq \gamma \left(\frac{1}{2}\right)^{2^{k}}
+            \end{align*}
 
+            Which is true $\forall \gamma \leq 1$, $\forall k \geq 1$, therefore the sequence $\left{x_k\right}$ is Q-quadratically convergent.
+
+    \item   Does the sequence $x_k = \frac{1}{k!}$ converge Q-superlinearly? Q-quadratically?
+    \item   Consider the sequence $\left{x_k\right}$ defined by
+            \begin{align*}
+                x_k = 5
+            \end{align*}
+            Is this sequence Q-superlinearly convergent? Q-quadratically convergent? R-quadratically convergent? Justify your answer.
+\end{enumerate}
 
 \newpage
 
