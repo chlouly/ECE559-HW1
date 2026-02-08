@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1770593295.92128 "/Users/chrislouly/Documents/MICHIGAN/ECE559/HW1/hw1.tex" "hw1.pdf" "hw1" 1770593297.209 0
-  "/Users/chrislouly/Documents/MICHIGAN/ECE559/HW1/hw1.tex" 1770593295.71531 17816 052adf3f8886cf44cb454387240c8fba ""
+["pdflatex"] 1770593403.79783 "/Users/chrislouly/Documents/MICHIGAN/ECE559/HW1/hw1.tex" "hw1.pdf" "hw1" 1770593405.13982 0
+  "/Users/chrislouly/Documents/MICHIGAN/ECE559/HW1/hw1.tex" 1770593403.55991 17983 8c218b3ee20c2786028dc800893ef5b4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm" 1136768653 1408 5937f58aa508ea2cea4901c07d10f5fe ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
@@ -255,9 +255,9 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1761689303 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1741450574 3345740 46b66fdb0378f7bf5921b5eabf1762b8 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "hw1.aux" 1770593297.09233 197 1d42a6de99033d495e37a273b3c9a464 "pdflatex"
-  "hw1.out" 1770593296.84747 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "hw1.tex" 1770593295.71531 17816 052adf3f8886cf44cb454387240c8fba ""
+  "hw1.aux" 1770593405.01536 197 1d42a6de99033d495e37a273b3c9a464 "pdflatex"
+  "hw1.out" 1770593404.74463 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "hw1.tex" 1770593403.55991 17983 8c218b3ee20c2786028dc800893ef5b4 ""
   "macros.tex" 1769450473.23891 7007 945a6bc9f56276e3300675a640ee2781 ""
   (generated)
   "hw1.aux"
